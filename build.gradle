@@ -27,6 +27,7 @@ dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
     // TODO: Kotlinをshadeする
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.32'
+    compile files('libs/Whitebait-1.0-SNAPSHOT.jar')
 }
 
 processResources {
