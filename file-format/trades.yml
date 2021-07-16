@@ -1,0 +1,14 @@
+<trade_id>:
+  name: <String>
+  isUnderMaintenance: <Boolean>
+  contents:
+    # if type is "backPanel"
+    <content_number>:
+      type: "backPanel"
+      panel: <ItemStack>
+    # if type is "product"
+    <content_number1>:
+      type: "product"
+      buy: <ItemStack>
+      sell:
+        <0..>: <ItemStack>
