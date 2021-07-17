@@ -9,6 +9,6 @@
     # if type is "product"
     <content_number1>:
       type: "product"
-      buy: <ItemStack>
-      sell:
+      sell: <ItemStack>
+      buy:
         <0..>: <ItemStack>

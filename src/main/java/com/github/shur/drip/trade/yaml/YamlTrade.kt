@@ -29,13 +29,13 @@ class YamlTrade(
                     BackPanel(panel)
                 }
                 "product" -> {
-                    val buy = contentConfig.getItemStack("buy")!!
-                    val sells = contentConfig.getConfigurationSection("sell")!!.let { sellConfig ->
-                        sellConfig.getKeys(false)
-                            .map { sellConfig.getItemStack(it)!! }
+                    val sell = contentConfig.getItemStack("sell")!!
+                    val buys = contentConfig.getConfigurationSection("buy")!!.let { buyConfig ->
+                        buyConfig.getKeys(false)
+                            .map { buyConfig.getItemStack(it)!! }
                             .toMutableList()
                     }
-                    Product(buy, sells)
+                    Product(sell, buys)
                 }
                 else -> return@forEach
             }
@@ -60,13 +60,13 @@ class YamlTrade(
                 }
                 is Product -> {
                     contentConfig.set("type", "product")
-                    contentConfig.set("buy", content.buy)
+                    contentConfig.set("sell", content.sell)
 
-                    val sellConfig = MemoryConfiguration()
-                    content.sell.forEachIndexed { sellIndex, sell ->
-                        sellConfig.set(sellIndex.toString(), sell)
+                    val buyConfig = MemoryConfiguration()
+                    content.buy.forEachIndexed { buyIndex, buy ->
+                        buyConfig.set(buyIndex.toString(), buy)
                     }
-                    contentConfig.set("sell", sellConfig)
+                    contentConfig.set("buy", buyConfig)
                 }
             }
 

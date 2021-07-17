@@ -9,6 +9,6 @@ class BackPanel(
 ) : TradeContent()
 
 class Product(
-    var buy: ItemStack,
-    var sell: MutableList<ItemStack>
+    var sell: ItemStack,
+    var buy: MutableList<ItemStack>
 ) : TradeContent()
