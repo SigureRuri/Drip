@@ -1,6 +1,7 @@
 package com.github.shur.drip.ui.trade
 
 import com.github.shur.drip.api.trade.Product
+import com.github.shur.drip.api.trade.Trade
 import com.github.shur.whitebait.dsl.window
 import com.github.shur.whitebait.inventory.InventoryUI
 import com.github.shur.whitebait.inventory.window.SizedWindowOption
@@ -8,6 +9,7 @@ import org.bukkit.ChatColor
 import org.bukkit.Material
 
 class ProductDetailsUI(
+    val trade: Trade,
     val product: Product,
     val pageOfBuy: Int = 1
 ) : InventoryUI {
@@ -50,7 +52,7 @@ class ProductDetailsUI(
             }
             onClickFilterNotDoubleClick {
                 if (pageOfBuy > 1) {
-                    ProductDetailsUI(product, pageOfBuy - 1).openLater(player)
+                    ProductDetailsUI(trade, product, pageOfBuy - 1).openLater(player)
                 }
             }
         }
@@ -62,8 +64,18 @@ class ProductDetailsUI(
             }
             onClickFilterNotDoubleClick {
                 if (pageOfBuy < maxPageOfBuy) {
-                    ProductDetailsUI(product, pageOfBuy + 1).openLater(player)
+                    ProductDetailsUI(trade, product, pageOfBuy + 1).openLater(player)
                 }
+            }
+        }
+
+        slot(45) {
+            icon {
+                type = Material.BARRIER
+                name = "${ChatColor.RED}${ChatColor.BOLD}戻る"
+            }
+            onClickFilterNotDoubleClick {
+                TradeUI(trade).openLater(player)
             }
         }
 

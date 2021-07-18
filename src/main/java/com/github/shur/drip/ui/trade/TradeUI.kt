@@ -59,7 +59,7 @@ class TradeUI(val trade: Trade) : InventoryUI {
 
                         onClickFilterNotDoubleClick {
                             if (isRightClick) {
-                                ProductDetailsUI(content).openLater(player)
+                                ProductDetailsUI(trade, content).openLater(player)
                             } else if (isLeftClick) {
                                 val playerInventory = player.inventory
 
