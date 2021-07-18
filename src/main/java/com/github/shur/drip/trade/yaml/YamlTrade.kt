@@ -5,12 +5,12 @@ import com.github.shur.drip.api.trade.Product
 import com.github.shur.drip.api.trade.TradeContent
 import com.github.shur.drip.api.trade.TradeId
 import com.github.shur.drip.trade.AbstractTrade
-import org.bukkit.configuration.ConfigurationSection
+import com.github.shur.drip.yaml.Yaml
 import org.bukkit.configuration.MemoryConfiguration
 
 class YamlTrade(
     id: TradeId,
-    private val parentConfig: ConfigurationSection
+    private val parentConfig: Yaml
 ) : AbstractTrade(id) {
 
     override fun load() {
@@ -75,11 +75,13 @@ class YamlTrade(
         config.set("contents", contentsConfig)
 
         parentConfig.set(id.toString(), config)
+
+        parentConfig.save()
     }
 
     companion object {
 
-        fun createAndLoad(parentConfig: ConfigurationSection, id: String): YamlTrade =
+        fun createAndLoad(parentConfig: Yaml, id: String): YamlTrade =
             YamlTrade(TradeId(id), parentConfig).apply { load() }
 
     }

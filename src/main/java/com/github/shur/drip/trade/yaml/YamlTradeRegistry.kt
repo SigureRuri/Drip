@@ -25,8 +25,6 @@ class YamlTradeRegistry(
         trades.values.forEach {
             it.save()
         }
-
-        yaml.save()
     }
 
 }
