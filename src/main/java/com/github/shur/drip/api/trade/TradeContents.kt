@@ -5,10 +5,26 @@ import org.bukkit.inventory.ItemStack
 sealed class TradeContent
 
 class BackPanel(
-    var panel: ItemStack
-) : TradeContent()
+    panel: ItemStack
+) : TradeContent() {
+
+    var panel: ItemStack = panel
+        get() = field.clone()
+        set(value) { field = value.clone() }
+
+}
 
 class Product(
-    var sell: ItemStack,
-    var buy: MutableList<ItemStack>
-) : TradeContent()
+    sell: ItemStack,
+    buy: MutableList<ItemStack>
+) : TradeContent() {
+
+    var sell: ItemStack = sell
+        get() = field.clone()
+        set(value) { field = value.clone() }
+
+    var buy: MutableList<ItemStack> = buy
+        get() = field.map { it.clone() }.toMutableList()
+        set(value) { field = value.map { it.clone() }.toMutableList() }
+
+}
