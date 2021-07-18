@@ -50,9 +50,9 @@ class YamlTrade(
         config.set("name", name)
         config.set("isUnderMaintenance", isUnderMaintenance)
 
+        val contentsConfig = MemoryConfiguration()
         contents.forEach { (contentIndex, content) ->
             val contentConfig = MemoryConfiguration()
-
             when (content) {
                 is BackPanel -> {
                     contentConfig.set("type", "backPanel")
@@ -70,8 +70,9 @@ class YamlTrade(
                 }
             }
 
-            config.set(contentIndex.toString(), contentConfig)
+            contentsConfig.set(contentIndex.toString(), contentConfig)
         }
+        config.set("contents", contentsConfig)
 
         parentConfig.set(id.toString(), config)
     }
