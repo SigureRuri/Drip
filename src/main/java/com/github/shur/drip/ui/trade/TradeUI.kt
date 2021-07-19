@@ -6,7 +6,10 @@ import com.github.shur.drip.api.trade.Trade
 import com.github.shur.whitebait.dsl.window
 import com.github.shur.whitebait.inventory.InventoryUI
 import com.github.shur.whitebait.inventory.window.SizedWindowOption
+import org.bukkit.Bukkit
 import org.bukkit.ChatColor
+import org.bukkit.event.inventory.InventoryType
+import org.bukkit.inventory.PlayerInventory
 
 class TradeUI(val trade: Trade) : InventoryUI {
 
@@ -69,22 +72,20 @@ class TradeUI(val trade: Trade) : InventoryUI {
                                 ProductDetailsUI(trade, content).openLater(player)
                             } else if (isLeftClick) {
                                 val playerInventory = player.inventory
+                                val inventoryForChecking = Bukkit.createInventory(null, InventoryType.PLAYER).apply {
+                                    contents = playerInventory.contents
+                                }
 
-                                content.buy.forEach {
-                                    if (!playerInventory.containsAtLeast(it, it.amount)) {
-                                        player.sendMessage("必要アイテムが不足しています")
-                                        return@onClickFilterNotDoubleClick
+                                if (inventoryForChecking.removeItem(*content.buy.toTypedArray()).isEmpty()) {
+                                    playerInventory.removeItem(*content.buy.toTypedArray())
+
+                                    if (playerInventory.firstEmpty() == -1) {
+                                        player.world.dropItem(player.location, content.sell)
+                                    } else {
+                                        playerInventory.addItem(content.sell)
                                     }
-                                }
-
-                                content.buy.forEach {
-                                    playerInventory.removeItem(it)
-                                }
-
-                                if (playerInventory.firstEmpty() == -1) {
-                                    player.world.dropItem(player.location, content.sell)
                                 } else {
-                                    playerInventory.addItem(content.sell)
+                                    player.sendMessage("必要アイテムが不足しています")
                                 }
                             }
                         }
