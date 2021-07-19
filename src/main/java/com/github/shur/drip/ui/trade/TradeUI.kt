@@ -34,27 +34,34 @@ class TradeUI(val trade: Trade) : InventoryUI {
                                 "${ChatColor.AQUA}${ChatColor.BOLD}必要アイテム"
                             )
 
-                            val buyLore = content.buy
+                            val buy = content.buy
                                 .map { buy ->
-                                    if (buy.hasItemMeta() && buy.itemMeta!!.hasDisplayName()) {
-                                        buy.itemMeta!!.displayName
-                                    } else {
-                                        buy.type.name.toLowerCase().replace("_", " ").split(" ")
-                                            .joinToString(" ") {
-                                                it.substring(0, 1).toUpperCase() + it.substring(1).toLowerCase()
-                                            }
-                                    }
+                                    val displayName =
+                                        if (buy.hasItemMeta() && buy.itemMeta!!.hasDisplayName()) {
+                                            buy.itemMeta!!.displayName
+                                        } else {
+                                            buy.type.name.toLowerCase().replace("_", " ").split(" ")
+                                                .joinToString(" ") {
+                                                    it.substring(0, 1).toUpperCase() + it.substring(1).toLowerCase()
+                                                }
+                                        }
+                                    "${ChatColor.RESET}${ChatColor.DARK_AQUA} * ${ChatColor.WHITE}$displayName x ${buy.amount}"
                                 }
-                                .map { "${ChatColor.RESET}${ChatColor.DARK_AQUA} * ${ChatColor.WHITE}$it" }
                                 .toMutableList()
+                            val buyLore =
+                                if (buy.isEmpty()) {
+                                    listOf("${ChatColor.WHITE} 無し")
+                                } else {
+                                    buy
+                                }
 
-                            val description = mutableListOf(
+                            val descriptionLore = listOf(
                                 "",
                                 "${ChatColor.GRAY}${ChatColor.UNDERLINE}右クリックで詳細を表示",
                                 "${ChatColor.YELLOW}${ChatColor.UNDERLINE}左クリックで購入",
                             )
 
-                            lore = (lore + buyLorePrefix + buyLore + description).toMutableList()
+                            lore = (lore + buyLorePrefix + buyLore + descriptionLore).toMutableList()
                         }
 
                         onClickFilterNotDoubleClick {
