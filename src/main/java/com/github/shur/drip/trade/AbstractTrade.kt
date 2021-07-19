@@ -46,4 +46,8 @@ abstract class AbstractTrade(
     override fun hasContent(index: Int): Boolean =
         contents.contains(index)
 
+    override fun removeContent(index: Int) {
+        contents.remove(index)
+    }
+
 }

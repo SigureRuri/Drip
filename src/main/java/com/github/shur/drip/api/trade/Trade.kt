@@ -28,6 +28,8 @@ interface Trade {
 
     fun hasContent(index: Int): Boolean
 
+    fun removeContent(index: Int)
+
     fun save()
 
     fun load()
