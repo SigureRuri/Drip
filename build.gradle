@@ -21,6 +21,8 @@ repositories {
         name = 'sonatype'
         url = 'https://oss.sonatype.org/content/groups/public/'
     }
+    maven { url = "https://jitpack.io" }
+    maven { url = "https://repo.codemc.org/repository/maven-public/" }
 }
 
 dependencies {
@@ -28,6 +30,8 @@ dependencies {
     // TODO: Kotlinをshadeする
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.32'
     compile files('libs/Whitebait-1.0-SNAPSHOT.jar')
+    // TODO: shade
+    compileOnly "dev.jorel.CommandAPI:commandapi-core:5.12"
 }
 
 processResources {

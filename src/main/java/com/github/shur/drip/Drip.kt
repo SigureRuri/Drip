@@ -1,6 +1,7 @@
 package com.github.shur.drip
 
 import com.github.shur.drip.api.trade.TradeRegistry
+import com.github.shur.drip.command.DripCommand
 import com.github.shur.drip.trade.yaml.YamlTradeRegistry
 import com.github.shur.drip.yaml.TradesYaml
 import org.bukkit.plugin.java.JavaPlugin
@@ -12,6 +13,8 @@ class Drip : JavaPlugin() {
 
         tradeRegistry = YamlTradeRegistry(TradesYaml)
         tradeRegistry.load()
+
+        DripCommand.registerCommand()
     }
 
     override fun onDisable() {

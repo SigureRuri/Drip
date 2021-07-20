@@ -3,3 +3,4 @@ version: @version@
 main: com.github.shur.drip.Drip
 api-version: 1.16
 authors: [ ShuR ]
+depend: [CommandAPI]
