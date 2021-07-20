@@ -64,15 +64,14 @@ class ProductEditorUI(
             }
         }
 
-        slot(52) {
-            icon {
-                type = Material.ARROW
-                name = "${ChatColor.RED}前のページへ"
-            }
-            onClickFilterNotDoubleClick {
-                if (pageOfBuy > 1) {
+        if (pageOfBuy > 1) {
+            slot(52) {
+                icon {
+                    type = Material.ARROW
+                    name = "${ChatColor.RED}前のページへ"
+                }
+                onClickFilterNotDoubleClick {
                     saveDeliveryValueToThis(inventory)
-
                     ProductEditorUI(trade, index, pageOfBuy - 1, sell, buys).openLater(player)
                 }
             }
@@ -97,7 +96,7 @@ class ProductEditorUI(
 
             slot(slotIndex) {
                 val buy = buys[buyIndex]
-                if (buy != null ) {
+                if (buy != null) {
                     icon(buy) { }
                 }
 

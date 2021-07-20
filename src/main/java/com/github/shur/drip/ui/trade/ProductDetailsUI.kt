@@ -45,25 +45,25 @@ class ProductDetailsUI(
             }
         }
 
-        slot(52) {
-            icon {
-                type = Material.ARROW
-                name = "${ChatColor.RED}前のページへ"
-            }
-            onClickFilterNotDoubleClick {
-                if (pageOfBuy > 1) {
+        if (pageOfBuy > 1) {
+            slot(52) {
+                icon {
+                    type = Material.ARROW
+                    name = "${ChatColor.RED}前のページへ"
+                }
+                onClickFilterNotDoubleClick {
                     ProductDetailsUI(trade, product, pageOfBuy - 1).openLater(player)
                 }
             }
         }
 
-        slot(53) {
-            icon {
-                type = Material.ARROW
-                name = "${ChatColor.RED}次のページへ"
-            }
-            onClickFilterNotDoubleClick {
-                if (pageOfBuy < maxPageOfBuy) {
+        if (pageOfBuy < maxPageOfBuy) {
+            slot(53) {
+                icon {
+                    type = Material.ARROW
+                    name = "${ChatColor.RED}次のページへ"
+                }
+                onClickFilterNotDoubleClick {
                     ProductDetailsUI(trade, product, pageOfBuy + 1).openLater(player)
                 }
             }
