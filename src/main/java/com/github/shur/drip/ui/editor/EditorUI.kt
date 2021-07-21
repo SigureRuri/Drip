@@ -1,12 +1,13 @@
 package com.github.shur.drip.ui.editor
 
-import com.github.shur.drip.api.trade.BackPanel
-import com.github.shur.drip.api.trade.Product
+import com.github.shur.drip.Drip
 import com.github.shur.drip.api.trade.Trade
-import com.github.shur.drip.ui.trade.ProductDetailsUI
+import com.github.shur.renachataccessor.RenaChatAccessor
+import com.github.shur.renachataccessor.chataccessor.ChatAccessor
 import com.github.shur.whitebait.dsl.window
 import com.github.shur.whitebait.inventory.InventoryUI
 import com.github.shur.whitebait.inventory.window.SizedWindowOption
+import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Material
 
@@ -39,7 +40,27 @@ class EditorUI(
             icon {
                 type = Material.NAME_TAG
                 name = "${ChatColor.BLUE}${ChatColor.BOLD}${ChatColor.UNDERLINE}名前編集"
-                lore = mutableListOf("", "${ChatColor.RED}※未実装")
+            }
+            onClickFilterNotDoubleClick {
+                RenaChatAccessor.getChatAccessorManager().register(
+                    ChatAccessor(player)
+                        .expirationTicks(20L * 60L)
+                        .onResponse { input ->
+                            val newName = ChatColor.translateAlternateColorCodes('&', input)
+
+                            trade.name = newName
+
+                            player.sendMessage("名前を編集しました。 [${newName}${ChatColor.RESET}]")
+                        }
+                        .onCancel {
+                            player.sendMessage("名前編集をキャンセルしました。")
+                        }
+                )
+
+                player.sendMessage("チャット欄に名前を入力してください。")
+                player.sendMessage("名前にはカラーコード[&]を使用できます。")
+
+                Bukkit.getScheduler().runTask(Drip.instance, Runnable { player.closeInventory() })
             }
         }
 
