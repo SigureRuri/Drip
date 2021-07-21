@@ -30,6 +30,7 @@ dependencies {
     // TODO: Kotlinをshadeする
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.32'
     compile files('libs/Whitebait-1.0-SNAPSHOT.jar')
+    compile files('libs/RenaChatAccessor.jar')
     // TODO: shade
     compileOnly "dev.jorel.CommandAPI:commandapi-core:5.12"
 }
