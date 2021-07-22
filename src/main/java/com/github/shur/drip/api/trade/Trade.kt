@@ -1,5 +1,7 @@
 package com.github.shur.drip.api.trade
 
+import java.util.*
+
 interface Trade {
 
     val id: TradeId
@@ -8,7 +10,15 @@ interface Trade {
 
     var isUnderMaintenance: Boolean
 
+    var owners: MutableSet<UUID>
+
     var contents: MutableMap<Int, TradeContent>
+
+    fun addOwner(uuid: UUID)
+
+    fun removeOwner(uuid: UUID)
+
+    fun hasOwner(uuid: UUID): Boolean
 
     fun getProduct(index: Int): Product?
 

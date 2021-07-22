@@ -5,6 +5,7 @@ import com.github.shur.drip.api.trade.Product
 import com.github.shur.drip.api.trade.Trade
 import com.github.shur.drip.api.trade.TradeContent
 import com.github.shur.drip.api.trade.TradeId
+import java.util.*
 
 abstract class AbstractTrade(
     override val id: TradeId
@@ -14,7 +15,20 @@ abstract class AbstractTrade(
 
     override var isUnderMaintenance: Boolean = false
 
+    override var owners: MutableSet<UUID> = mutableSetOf()
+
     override var contents: MutableMap<Int, TradeContent> = mutableMapOf()
+
+    override fun addOwner(uuid: UUID) {
+        owners.add(uuid)
+    }
+
+    override fun removeOwner(uuid: UUID) {
+        owners.remove(uuid)
+    }
+
+    override fun hasOwner(uuid: UUID): Boolean =
+        owners.contains(uuid)
 
     override fun getProduct(index: Int): Product? =
         contents[index] as? Product

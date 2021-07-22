@@ -7,6 +7,7 @@ import com.github.shur.drip.api.trade.TradeId
 import com.github.shur.drip.trade.AbstractTrade
 import com.github.shur.drip.yaml.Yaml
 import org.bukkit.configuration.MemoryConfiguration
+import java.util.*
 
 class YamlTrade(
     id: TradeId,
@@ -18,6 +19,7 @@ class YamlTrade(
 
         name = config.getString("name")!!
         isUnderMaintenance = config.getBoolean("isUnderMaintenance")
+        owners = config.getStringList("owners").map { UUID.fromString(it) }.toMutableSet()
 
         val contentsConfig = config.getConfigurationSection("contents") ?: MemoryConfiguration()
         contentsConfig.getKeys(false).forEach { contentsKey ->
@@ -49,6 +51,7 @@ class YamlTrade(
 
         config.set("name", name)
         config.set("isUnderMaintenance", isUnderMaintenance)
+        config.set("owners", owners.map { it.toString() })
 
         val contentsConfig = MemoryConfiguration()
         contents.forEach { (contentIndex, content) ->

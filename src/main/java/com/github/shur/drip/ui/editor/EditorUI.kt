@@ -4,6 +4,8 @@ import com.github.shur.drip.Drip
 import com.github.shur.drip.api.trade.Trade
 import com.github.shur.renachataccessor.RenaChatAccessor
 import com.github.shur.renachataccessor.chataccessor.ChatAccessor
+import com.github.shur.renainteractaccessor.RenaInteractAccessor
+import com.github.shur.renainteractaccessor.interactaccessor.InteractAccessor
 import com.github.shur.whitebait.dsl.window
 import com.github.shur.whitebait.inventory.InventoryUI
 import com.github.shur.whitebait.inventory.window.SizedWindowOption
@@ -65,6 +67,39 @@ class EditorUI(
         }
 
         slot(12) {
+            icon {
+                type = Material.BAT_SPAWN_EGG
+                name = "${ChatColor.YELLOW}${ChatColor.BOLD}${ChatColor.UNDERLINE}オーナー編集"
+            }
+            onClickFilterNotDoubleClick {
+                RenaInteractAccessor.getInteractAccessorManager().register(
+                    InteractAccessor(player)
+                        .expirationTicks(20L * 60L)
+                        .onResponse { interactedEntity ->
+                            val uuid = interactedEntity.uniqueId
+
+                            if (trade.hasOwner(uuid)) {
+                                trade.removeOwner(uuid)
+
+                                player.sendMessage("オーナーを削除しました。 [$uuid]")
+                            } else {
+                                trade.addOwner(uuid)
+
+                                player.sendMessage("オーナーを追加しました。 [$uuid]")
+                            }
+                        }
+                        .onCancel {
+                            player.sendMessage("オーナー編集をキャンセルしました。")
+                        }
+                )
+
+                player.sendMessage("対象のエンティティをクリックしてください。")
+
+                Bukkit.getScheduler().runTask(Drip.instance, Runnable { player.closeInventory() })
+            }
+        }
+
+        slot(13) {
             icon {
                 type = Material.TOTEM_OF_UNDYING
                 val maintenanceStatus = when (trade.isUnderMaintenance) {

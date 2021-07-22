@@ -4,3 +4,6 @@ main: com.github.shur.drip.Drip
 api-version: 1.16
 authors: [ ShuR ]
 depend: [CommandAPI]
+permissions:
+  drip.trade.*:
+    default: true
