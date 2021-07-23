@@ -7,10 +7,7 @@ import com.github.shur.drip.util.TradeUtil
 import com.github.shur.whitebait.dsl.window
 import com.github.shur.whitebait.inventory.InventoryUI
 import com.github.shur.whitebait.inventory.window.SizedWindowOption
-import org.bukkit.Bukkit
 import org.bukkit.ChatColor
-import org.bukkit.event.inventory.InventoryType
-import org.bukkit.inventory.PlayerInventory
 
 class TradeUI(val trade: Trade) : InventoryUI {
 

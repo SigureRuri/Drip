@@ -2,7 +2,6 @@ package com.github.shur.drip.ui.editor
 
 import com.github.shur.drip.api.trade.Product
 import com.github.shur.drip.api.trade.Trade
-import com.github.shur.drip.ui.trade.ProductDetailsUI
 import com.github.shur.whitebait.dsl.window
 import com.github.shur.whitebait.inventory.InventoryUI
 import com.github.shur.whitebait.inventory.window.SizedWindowOption

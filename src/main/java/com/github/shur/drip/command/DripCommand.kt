@@ -6,7 +6,6 @@ import com.github.shur.drip.api.trade.TradeId
 import com.github.shur.drip.command.argument.TradeArgument
 import com.github.shur.drip.command.argument.TradeIdArgument
 import com.github.shur.drip.trade.yaml.YamlTrade
-import com.github.shur.drip.ui.editor.ContentsEditorUI
 import com.github.shur.drip.ui.editor.EditorUI
 import com.github.shur.drip.ui.trade.TradeUI
 import com.github.shur.drip.yaml.TradesYaml
