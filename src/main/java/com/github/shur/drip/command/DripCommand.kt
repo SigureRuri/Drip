@@ -5,6 +5,7 @@ import com.github.shur.drip.api.trade.Trade
 import com.github.shur.drip.api.trade.TradeId
 import com.github.shur.drip.command.argument.TradeArgument
 import com.github.shur.drip.command.argument.TradeIdArgument
+import com.github.shur.drip.externalplugin.harukatrade.HarukaFileExporter
 import com.github.shur.drip.trade.yaml.YamlTrade
 import com.github.shur.drip.ui.editor.EditorUI
 import com.github.shur.drip.ui.trade.TradeUI
@@ -62,12 +63,38 @@ object DripCommand {
             Command.broadcastCommandMessage(sender, "Opened trade [${trade.id}]")
         })
 
+    private val exportHarukaTradeAll = CommandAPICommand("all")
+        .executesPlayer(PlayerCommandExecutor { sender, _ ->
+            HarukaFileExporter.exportAll()
+
+            Command.broadcastCommandMessage(sender, "Exported all trades")
+        })
+
+    private val exportHarukaTradeTrade = CommandAPICommand("trade")
+        .withArguments(TradeArgument.tradeArgument("tradetoexport"))
+        .executesPlayer(PlayerCommandExecutor { sender, args ->
+            val trade = args[0] as Trade
+
+            HarukaFileExporter.export(trade)
+
+            Command.broadcastCommandMessage(sender, "Exported trade [${trade.id}]")
+        })
+
+    private val exportHarukaTrade = CommandAPICommand("harukatrade")
+        .withSubcommand(exportHarukaTradeAll)
+        .withSubcommand(exportHarukaTradeTrade)
+
+    private val export = CommandAPICommand("export")
+        .withPermission("drip.command.export")
+        .withSubcommand(exportHarukaTrade)
+
     private val drip = CommandAPICommand("drip")
         .withAliases("dtrade")
         .withSubcommand(create)
         .withSubcommand(remove)
         .withSubcommand(edit)
         .withSubcommand(open)
+        .withSubcommand(export)
 
     internal fun registerCommand() {
         drip.register()
