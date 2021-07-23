@@ -3,6 +3,7 @@ package com.github.shur.drip.ui.trade
 import com.github.shur.drip.api.trade.BackPanel
 import com.github.shur.drip.api.trade.Product
 import com.github.shur.drip.api.trade.Trade
+import com.github.shur.drip.util.TradeUtil
 import com.github.shur.whitebait.dsl.window
 import com.github.shur.whitebait.inventory.InventoryUI
 import com.github.shur.whitebait.inventory.window.SizedWindowOption
@@ -71,21 +72,11 @@ class TradeUI(val trade: Trade) : InventoryUI {
                             if (isRightClick) {
                                 ProductDetailsUI(trade, content).openLater(player)
                             } else if (isLeftClick) {
-                                val playerInventory = player.inventory
-                                val inventoryForChecking = Bukkit.createInventory(null, InventoryType.PLAYER).apply {
-                                    contents = playerInventory.contents
-                                }
-
-                                if (inventoryForChecking.removeItem(*content.buy.toTypedArray()).isEmpty()) {
-                                    playerInventory.removeItem(*content.buy.toTypedArray())
-
-                                    if (playerInventory.firstEmpty() == -1) {
-                                        player.world.dropItem(player.location, content.sell)
-                                    } else {
-                                        playerInventory.addItem(content.sell)
-                                    }
+                                if (isShiftClick) {
+                                    TradeUtil.buy(content, player)
                                 } else {
-                                    player.sendMessage("必要アイテムが不足しています")
+                                    // 2回クリックで3回実行されるが仕様上しかたがない
+                                    PurchaseConfirmationUI(trade, content).openLater(player)
                                 }
                             }
                         }
