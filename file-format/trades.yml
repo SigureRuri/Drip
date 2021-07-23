@@ -1,6 +1,7 @@
 <trade_id>:
   name: <String>
   isUnderMaintenance: <Boolean>
+  owners: <StringList / UUID>
   contents:
     # if type is "backPanel"
     <content_number>:
