@@ -34,6 +34,7 @@ dependencies {
     compile files('libs/RenaInteractAccessor.jar')
     // TODO: shade
     compileOnly "dev.jorel.CommandAPI:commandapi-core:5.12"
+    compileOnly "com.github.MilkBowl:VaultAPI:1.7"
 }
 
 processResources {
